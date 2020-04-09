@@ -58,8 +58,9 @@ class EditorController extends Controller
 
     private function getUser($request) {
         $user = $request->session()->get('user');
+        $user = User::find($user['id']);
         if($user) {
-            return User::find($user['id']);
+            return $user;
         }
         abort(403);
     }
