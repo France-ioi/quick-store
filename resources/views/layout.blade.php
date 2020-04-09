@@ -9,7 +9,7 @@
         <script src="/js/app.js" charset="UTF-8"></script>
     </head>
     <body>
-        <div class="container">
+        <div class="container" style="margin-top: 50px">
             @yield('content')
         </div>
     </body>

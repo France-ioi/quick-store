@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('content')
-    <div class="row" style="margin-top: 50px">
+    <div class="row">
        
         <div class="col-md-6">
             <div class="card">

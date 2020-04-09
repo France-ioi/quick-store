@@ -57,9 +57,10 @@
             var cfg = {!! json_encode(config('data_record')) !!};
 
             // interface
+            var changed = false;
             function refreshInterface() {
                 var table_empty = $('#table').find('tr').length < 2;
-                $('#btn-submit').toggle(!table_empty);
+                $('#btn-submit').toggle(!table_empty || changed);
                 $('#table').toggle(!table_empty);
             }
             refreshInterface();
@@ -70,6 +71,7 @@
                     e.preventDefault();
                     if(confirm('Delete record?')) {
                         el.closest('tr').remove();
+                        changed = true;
                         refreshInterface();
                     }
                 })
