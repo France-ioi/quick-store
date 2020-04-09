@@ -13,8 +13,14 @@ class EntranceController extends Controller
 
     public function index(Request $request) {
         $request->session()->forget('user');
+        $locale = $request->session()->get('locale');
+        if(!$locale) {
+            $locale = config('app.locale');
+        }
         return view('entrance.index', [
-            'prefix' => $request->session()->get('prefix')
+            'prefix' => $request->session()->get('prefix'),
+            'locales' => config('app.locales'),
+            'locale' => $locale
         ]);
     }
 

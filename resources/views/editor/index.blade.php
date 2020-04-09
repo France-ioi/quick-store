@@ -5,7 +5,7 @@
 
     @if(Session::has('success'))
         <div class="alert alert-success">
-            Data updated successfully
+            @lang('editor.message_updated')
         </div>
     @endif    
 
@@ -14,9 +14,9 @@
         <table class="table" id="table">
             <thead class="thead-dark">
                 <tr>
-                    <th class="col-md-4">Key</th>
-                    <th class="col-md-6">Value</th>
-                    <th class="col-md-2">Action</th>
+                    <th class="col-md-4">@lang('editor.key')</th>
+                    <th class="col-md-6">@lang('editor.value')</th>
+                    <th class="col-md-2">@lang('editor.action')</th>
                 </tr>
             </thead>
 
@@ -24,18 +24,18 @@
                 <tr>
                     <td>{{ $rec->key }}</td>
                     <td><textarea class="form-control" name="values[{{$rec->id}}]">{{ $rec->value }}</textarea></td>
-                    <td><button class="btn btn-danger btn-detele">Delete</button></td>
+                    <td><button class="btn btn-danger btn-detele">@lang('editor.delete')</button></td>
                 </tr>
             @endforeach
         </table>
 
         <div class="row justify-content-between">
             <div class="col-4">
-                <button id="btn-add" class="btn btn-success">Add record</button>
-                <button id="btn-submit" type="submit" class="btn btn-primary pull-right">Save changes</button>
+                <button id="btn-add" class="btn btn-success">@lang('editor.add_record')</button>
+                <button id="btn-submit" type="submit" class="btn btn-primary pull-right">@lang('editor.save_changes')</button>
             </div>
             <div class="col-4 text-right">
-                <a class="btn btn-danger" href="/">Exit</a>
+                <a class="btn btn-danger" href="/">@lang('editor.exit')</a>
             </div>
         </div>        
 
@@ -46,9 +46,16 @@
         <tr id="new-record-template" class="table-success">
             <td><input type="text" name="new_keys[]" class="form-control"/></td>
             <td><textarea class="form-control" name="new_values[]"></textarea></td>
-            <td><button class="btn btn-danger btn-detele">Delete</button></td>
+            <td><button class="btn btn-danger btn-detele">@lang('editor.delete')</button></td>
         </tr>
     </table>
+
+    <div id="validation-error-message" class="d-none">
+        @lang('editor.validation_error', config('data_record'))
+    </div>
+    <div id="delete-confirmation-message" class="d-none">
+        @lang('editor.delete_confirmation')
+    </div>    
 
 
     <script>
@@ -69,7 +76,7 @@
             function initDeleteHandler(el) {
                 el.click(function(e) {
                     e.preventDefault();
-                    if(confirm('Delete record?')) {
+                    if(confirm($('#delete-confirmation-message').text())) {
                         el.closest('tr').remove();
                         changed = true;
                         refreshInterface();
@@ -107,10 +114,7 @@
                     all_valid = all_valid && el_valid;                    
                 });
                 if(!all_valid) {
-                    alert(
-                        'Keys and values can not be empty. Max key size is ' + cfg.key_max_length + 
-                        ' chars, max value size is ' + cfg.value_max_length + ' chars.'
-                    );
+                    alert($('#validation-error-message').text());
                     e.preventDefault();
                 }
                 
