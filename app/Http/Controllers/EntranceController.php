@@ -65,24 +65,5 @@ class EntranceController extends Controller
         return $prefix;
     }
 
-    
-    public function show_credentials(Request $request) {
-        $user = $request->session()->get('user');
-        if(!$user) {
-            return redirect('/');
-        }
-        if(!isset($user['prefix'])) {
-            return redirect('/editor');
-        }
-        $conf = [
-            'prefix' => $user['prefix'],
-            'password' => $user['password'],
-            'host' => $request->getSchemeAndHttpHost()
-        ];
-        return view('entrance.credentials', [
-            'user' => $user,
-            'conf' => $conf
-        ]);
-    }    
 
 }

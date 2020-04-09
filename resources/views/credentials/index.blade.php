@@ -28,7 +28,10 @@
                         <textarea class="form-control">{!! json_encode($conf, JSON_UNESCAPED_SLASHES) !!}</textarea>
                     </p>
 
-                    <a class="btn btn-primary" href="/editor">Continue</a>
+                    <form method="POST" action="/credentials">
+                        @csrf
+                        <button type="submit" class="btn btn-primary" href="/editor">Continue</button>
+                    </form>
                 </div>
             </div>
         </div>
