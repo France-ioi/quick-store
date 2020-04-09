@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Hash;
 use Str;
+use Validator;
 
 class EntranceController extends Controller
 {
@@ -28,12 +29,21 @@ class EntranceController extends Controller
         }
         return redirect()->back()->with([
             'prefix' => $request->get('prefix'),
-            'error' => true
+            'error_password' => true
         ]);
     }
 
 
     public function new_prefix(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'captcha' => 'required|captcha'
+        ]);       
+        if($validator->fails()) {
+            return redirect()->back()->with([
+                'error_captcha' => true
+            ]);            
+        }
+
         $password = Str::random(config('user.password_length'));
         $user = User::create([
             'prefix' => $this->generatePrefix(),
