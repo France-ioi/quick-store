@@ -8,7 +8,6 @@ use App\User;
 use App\DataRecord;
 use Hash;
 use Validator;
-use Carbon\Carbon;
 
 class DataRecordController extends Controller
 {
@@ -36,7 +35,7 @@ class DataRecordController extends Controller
                 'message' => 'Key not found'
             ]);
         }
-        $rec->updated_at = Carbon::now();
+        $rec->updated_at = new \DateTime();
         $rec->save();
         return response()->json([
             'success' => true,
