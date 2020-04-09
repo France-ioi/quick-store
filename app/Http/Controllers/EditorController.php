@@ -36,15 +36,18 @@ class EditorController extends Controller
 
         $new_values = $request->get('new_values');
         $new_keys = $request->get('new_keys');
+        $keys_created = [];
         if(is_array($new_values)) {
             for($i=0; $i<count($new_values); $i++) {
-                if(trim($new_values[$i]) != '' && trim($new_keys[$i]) != '') {
-                    DataRecord::create([
-                        'user_id' => $user->id,
-                        'key' => $new_keys[$i],
-                        'value' => $new_values[$i]
-                    ]);
+                if(trim($new_values[$i]) == '' || trim($new_keys[$i]) == '' || isset($keys_created[$new_keys[$i]])) {
+                    continue;
                 }
+                $keys_created[$new_keys[$i]] = true;
+                DataRecord::create([
+                    'user_id' => $user->id,
+                    'key' => $new_keys[$i],
+                    'value' => $new_values[$i]
+                ]);
             }
         }
         return redirect()->back()->with([

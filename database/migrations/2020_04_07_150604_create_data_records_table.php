@@ -18,8 +18,9 @@ class CreateDataRecordsTable extends Migration
             $table->timestamps();
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');            
-            $table->string('key')->index();
+            $table->string('key');
             $table->string('value', 1024);
+            $table->unique(['user_id', 'key']);
         });
     }
 
