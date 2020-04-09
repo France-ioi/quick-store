@@ -10,7 +10,7 @@ class EditorController extends Controller
 {
     
     public function index(Request $request) {
-        $user = $this->getUser();
+        $user = $this->getUser($request);
         return view('editor.index', [
             'prefix' => $user->prefix,
             'rows' => $this->getRecords($user)
@@ -18,7 +18,7 @@ class EditorController extends Controller
     }
 
     public function update(Request $request) {
-        $user = $this->getUser();
+        $user = $this->getUser($request);
         $records = $this->getRecords($user);
 
         $values = $request->get('values');
@@ -51,9 +51,12 @@ class EditorController extends Controller
     }
 
 
-    private function getUser() {
-        // TODO: session
-        return User::find(1);
+    private function getUser($request) {
+        $user = $request->session()->get('user');
+        if($user) {
+            return User::find($user['id']);
+        }
+        abort(403);
     }
 
 

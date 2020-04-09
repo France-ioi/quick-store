@@ -29,8 +29,16 @@
             @endforeach
         </table>
 
-        <button id="btn-add" class="btn btn-success">Add record</button>
-        <button id="btn-submit" type="submit" class="btn btn-primary pull-right">Save changes</button>
+        <div class="row justify-content-between">
+            <div class="col-4">
+                <button id="btn-add" class="btn btn-success">Add record</button>
+                <button id="btn-submit" type="submit" class="btn btn-primary pull-right">Save changes</button>
+            </div>
+            <div class="col-4 text-right">
+                <a class="btn btn-danger" href="/">Exit</a>
+            </div>
+        </div>        
+
     </form>
 
 
