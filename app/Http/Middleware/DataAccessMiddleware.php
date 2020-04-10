@@ -23,17 +23,17 @@ class DataAccessMiddleware
      */
     public function handle($request, Closure $next)
     {
-        $limit = config('data_access_limit');
-        
-        if($limit['interval'] && $limit['quantity']) {
-            $prefix = $request->get('prefix');
-            $this->limiter->hit($prefix, $limit['interval']);
-            if($this->limiter->attempts($prefix) > $limit['quantity']) {
+        $prefix = $request->get('prefix');        
+        if($prefix) {
+            $limits_key = array_search($prefix, config('data_access_limit.special.prefixes')) === false ? 'common' : 'special';
+            $limit = config('data_access_limit')[$limits_key];
+            if($this->limiter->tooManyAttempts($prefix, $limit['quantity'])) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Too many requests'
                 ]);
             }
+            $this->limiter->hit($prefix, $limit['interval']);
         }
         return $next($request);
     }
