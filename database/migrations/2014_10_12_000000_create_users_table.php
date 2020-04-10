@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('prefix')->unique();
             $table->string('password');
-            $table->timestamps();
+            $table->datetime('last_access')->useCurrent();
         });
     }
 

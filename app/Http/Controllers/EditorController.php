@@ -26,7 +26,8 @@ class EditorController extends Controller
         foreach($records as $rec) {
             if(isset($values[$rec->id])) {
                 $rec->value = $values[$rec->id];
-                if(trim($rec->value) !== '') {
+                if(trim($rec->value) != '') {
+                    $rec->last_access = new \DateTime();
                     $rec->save();
                 }
             } else {
@@ -46,7 +47,8 @@ class EditorController extends Controller
                 DataRecord::create([
                     'user_id' => $user->id,
                     'key' => $new_keys[$i],
-                    'value' => $new_values[$i]
+                    'value' => $new_values[$i],
+                    'last_access' => new \DateTime()
                 ]);
             }
         }
@@ -60,6 +62,8 @@ class EditorController extends Controller
         $user = $request->session()->get('user');
         $user = User::find($user['id']);
         if($user) {
+            $user->last_access = new \DateTime();
+            $user->save();            
             return $user;
         }
         abort(403);
@@ -67,7 +71,7 @@ class EditorController extends Controller
 
 
     private function getRecords($user) {
-        return $user->dataRecords()->orderBy('created_at')->get();
+        return $user->dataRecords()->orderBy('last_access')->get();
     }
     
 }

@@ -9,6 +9,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
 
+    public $timestamps = false;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -16,7 +18,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'prefix', 
-        'password'
+        'password',
+        'last_accesss'
     ];
 
     /**

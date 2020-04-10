@@ -28,6 +28,9 @@ class DataRecordController extends Controller
                 'message' => 'Prefix not found'
             ]);
         }
+        $user->last_access = new \DateTime();
+        $user->save();
+
         $rec = DataRecord::where('user_id', $user->id)->where('key', $request->get('key'))->first();
         if(!$rec) {
             return response()->json([
@@ -35,7 +38,7 @@ class DataRecordController extends Controller
                 'message' => 'Key not found'
             ]);
         }
-        $rec->updated_at = new \DateTime();
+        $rec->last_access = new \DateTime();
         $rec->save();
         return response()->json([
             'success' => true,
@@ -76,15 +79,20 @@ class DataRecordController extends Controller
                 'message' => 'Wrong password'
             ]);            
         }
+        $user->last_access = new \DateTime();
+        $user->save();
+
         $rec = DataRecord::updateOrCreate(
             [
                 'user_id' => $user->id,
                 'key' => $request->get('key')
             ],
             [
-                'value' => $request->get('value')
+                'value' => $request->get('value'),
+                'last_access' => new \DateTime()
             ]
         );
+
         return response()->json([
             'success' => true
         ]);        

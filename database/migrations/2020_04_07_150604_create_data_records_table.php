@@ -15,12 +15,12 @@ class CreateDataRecordsTable extends Migration
     {
         Schema::create('data_records', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');            
             $table->string('key');
             $table->string('value', 1024);
             $table->unique(['user_id', 'key']);
+            $table->datetime('last_access')->useCurrent();
         });
     }
 
