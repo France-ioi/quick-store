@@ -12,7 +12,7 @@ return [
 
     'new' => [
         'title' => 'Créer un nouvel identifiant',
-        'code' => 'Code',
+        'code' => 'Tapez le code de l\'image ci-dessus(un Captcha)',
         'error' => 'Code invalide',
         'submit' => 'Créer'
     ]
