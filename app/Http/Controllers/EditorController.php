@@ -22,7 +22,6 @@ class EditorController extends Controller
         $records = $this->getRecords($user);
 
         $values = $request->get('values');
-
         foreach($records as $rec) {
             if(isset($values[$rec->id])) {
                 $rec->value = $values[$rec->id];
@@ -37,16 +36,16 @@ class EditorController extends Controller
 
         $new_values = $request->get('new_values');
         $new_keys = $request->get('new_keys');
-        $keys_created = [];
         if(is_array($new_values)) {
             for($i=0; $i<count($new_values); $i++) {
-                if(trim($new_values[$i]) == '' || trim($new_keys[$i]) == '' || isset($keys_created[$new_keys[$i]])) {
+                if(trim($new_values[$i]) == '' || trim($new_keys[$i]) == '') {
                     continue;
                 }
-                $keys_created[$new_keys[$i]] = true;
-                DataRecord::create([
+                DataRecord::updateOrCreate([
                     'user_id' => $user->id,
-                    'key' => $new_keys[$i],
+                    'key' => $new_keys[$i]
+                ],
+                [
                     'value' => $new_values[$i],
                     'last_access' => new \DateTime()
                 ]);
