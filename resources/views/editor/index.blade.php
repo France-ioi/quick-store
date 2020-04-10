@@ -14,9 +14,9 @@
         <table class="table" id="table">
             <thead class="thead-dark">
                 <tr>
-                    <th class="col-md-4">@lang('editor.key')</th>
-                    <th class="col-md-6">@lang('editor.value')</th>
-                    <th class="col-md-2">@lang('editor.action')</th>
+                    <th class="col-xs-4">@lang('editor.key')</th>
+                    <th class="col-xs-6">@lang('editor.value')</th>
+                    <th class="col-xs-2">@lang('editor.action')</th>
                 </tr>
             </thead>
 
@@ -30,7 +30,7 @@
         </table>
 
         <div class="row justify-content-between">
-            <div class="col-4">
+            <div class="col-8">
                 <button id="btn-add" class="btn btn-success">@lang('editor.add_record')</button>
                 <button id="btn-submit" type="submit" class="btn btn-primary pull-right">@lang('editor.save_changes')</button>
             </div>
